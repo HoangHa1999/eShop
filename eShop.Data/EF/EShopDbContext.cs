@@ -32,6 +32,9 @@ namespace eShop.Data.EF
             modelBuilder.ApplyConfiguration(new PromotionConfiguration());
             modelBuilder.ApplyConfiguration(new TransactionConfiguration());
 
+            //Data seeding
+           modelBuilder.Seed();
+
         }
 
         public DbSet<Product> Products { get; set; }
