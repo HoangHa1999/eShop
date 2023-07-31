@@ -27,7 +27,7 @@ namespace eShop.Data.Migrations
                     IsDefault = table.Column<bool>(nullable: false),
                     DateCreated = table.Column<DateTime>(nullable: false),
                     SortOrder = table.Column<int>(nullable: false),
-                    FileSize = table.Column<int>(nullable: false)
+                    FileSize = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
