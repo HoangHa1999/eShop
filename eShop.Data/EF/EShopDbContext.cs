@@ -16,7 +16,6 @@ namespace eShop.Data.EF
         {
         }
 
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -49,14 +48,12 @@ namespace eShop.Data.EF
 
             //Data seeding
             modelBuilder.Seed();
-
         }
 
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
 
         public DbSet<AppConfig> AppConfigs { get; set; }
-
 
         public DbSet<Cart> Carts { get; set; }
 
@@ -73,7 +70,6 @@ namespace eShop.Data.EF
         public DbSet<ProductTranslation> ProductTranslations { get; set; }
 
         public DbSet<Promotion> Promotions { get; set; }
-
 
         public DbSet<Transaction> Transactions { get; set; }
 
