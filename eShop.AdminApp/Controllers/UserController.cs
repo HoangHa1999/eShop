@@ -1,19 +1,19 @@
-﻿using eShop.ViewModels.System.Users;
-using eShopAdminApp.Services;
-using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Logging;
-using Microsoft.IdentityModel.Tokens;
-using System;
-using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using System;
+using eShop.AdminApp.Services;
+using eShop.ViewModels.System.Users;
+using Microsoft.IdentityModel.Logging;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
 
-namespace eShopAdminApp.Controllers
+namespace eShop.AdminApp.Controllers
 {
     public class UserController : Controller
     {

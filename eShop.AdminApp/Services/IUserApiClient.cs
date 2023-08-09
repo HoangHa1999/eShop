@@ -1,8 +1,7 @@
-﻿using eShop.ViewModels.Common;
-using eShop.ViewModels.System.Users;
+﻿using eShop.ViewModels.System.Users;
 using System.Threading.Tasks;
 
-namespace eShopAdminApp.Services
+namespace eShop.AdminApp.Services
 {
     public interface IUserApiClient
     {

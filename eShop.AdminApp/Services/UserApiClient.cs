@@ -1,11 +1,12 @@
 ﻿using eShop.ViewModels.System.Users;
-using Newtonsoft.Json;
-using System;
 using System.Net.Http;
+using System.Text.Json.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using System;
+using Newtonsoft.Json;
 
-namespace eShopAdminApp.Services
+namespace eShop.AdminApp.Services
 {
     public class UserApiClient : IUserApiClient
     {

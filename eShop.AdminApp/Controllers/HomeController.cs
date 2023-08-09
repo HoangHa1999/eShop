@@ -1,4 +1,4 @@
-﻿using eShopAdminApp.Models;
+﻿using eShop.AdminApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -8,7 +8,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace eShopAdminApp.Controllers
+namespace eShop.AdminApp.Controllers
 {
     [Authorize]
     public class HomeController : Controller
