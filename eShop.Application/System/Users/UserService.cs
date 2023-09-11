@@ -3,6 +3,7 @@ using eShop.ViewModels.Common;
 using eShop.ViewModels.System.Users;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -64,9 +65,20 @@ namespace eShop.Application.System.Users
             return new ApiSuccessResult<string>(new JwtSecurityTokenHandler().WriteToken(token));
         }
 
-        public Task<ApiResult<bool>> Delete(Guid id)
+        public async Task<ApiResult<bool>> Delete(Guid id)
         {
-            throw new NotImplementedException();
+            var user = await _userManager.FindByIdAsync(id.ToString());
+            if (user == null)
+            {
+                return new ApiErrorResult<bool>("User không tồn tại");
+            }
+            var result = await _userManager.DeleteAsync(user);
+
+            if (result.Succeeded)
+            {
+                return new ApiSuccessResult<bool>();
+            }
+            return new ApiErrorResult<bool>("Xóa không thành công");
         }
 
         public async Task<ApiResult<UserVm>> GetById(Guid id)
