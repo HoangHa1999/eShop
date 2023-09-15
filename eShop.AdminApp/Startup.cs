@@ -41,6 +41,8 @@ namespace eShop.AdminApp
 
             services.AddTransient<IRoleApiClient, RoleApiClient>();
 
+            services.AddTransient<ILanguageApiClient, LanguageApiClient>();
+
             services.AddControllersWithViews().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>()); ;
 
             services.AddSession(options =>

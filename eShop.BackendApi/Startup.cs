@@ -23,6 +23,7 @@ using FluentValidation.AspNetCore;
 using FluentValidation;
 using eShop.ViewModels.System.Users;
 using eShop.Application.System.Roles;
+using eShop.Application.System.Languages;
 
 namespace eShop.BackendApi
 {
@@ -55,6 +56,8 @@ namespace eShop.BackendApi
             services.AddTransient<SignInManager<AppUser>, SignInManager<AppUser>>();
 
             services.AddTransient<RoleManager<AppRole>, RoleManager<AppRole>>();
+
+            services.AddTransient<ILanguageService, LanguageService>();
 
             services.AddTransient<IRoleService, RoleService>();
 
