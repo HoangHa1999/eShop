@@ -43,6 +43,10 @@ namespace eShop.AdminApp
 
             services.AddTransient<ILanguageApiClient, LanguageApiClient>();
 
+            services.AddTransient<IProductApiClient, ProductApiClient>();
+
+            services.AddTransient<ICategoryApiClient, CategoryApiClient>();
+
             services.AddControllersWithViews().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>()); ;
 
             services.AddSession(options =>
