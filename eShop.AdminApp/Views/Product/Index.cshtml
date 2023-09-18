@@ -29,16 +29,25 @@
                 </div>
                 <div class="col-md-6 col-xs-12">
                     <form asp-action="Index" method="get">
-                        <div class="input-group">
-                            <input value="@ViewBag.keyword" name="keyword" type="text" class="form-control small border-0" placeholder="Search for..."
-                                   aria-label="Search" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="submit">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
-                                <button class="btn btn-dark" type="button" onclick="window.location.href='/Product/Index'">
-                                    reset
-                                </button>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <select name="CategoryId" onchange="this.form.submit()" asp-items="@ViewBag.Categories" class="form-control">
+                                    <option>--Chọn danh mục--</option>
+                                </select>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="input-group">  
+                                    <input value="@ViewBag.keyword" name="Keyword" type="text" class="form-control small border-0" placeholder="Search for..."
+                                           aria-label="Search" aria-describedby="basic-addon2">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary" type="submit">
+                                            <i class="fas fa-search fa-sm"></i>
+                                        </button>
+                                        <button class="btn btn-dark" type="button" onclick="window.location.href='/Product/Index'">
+                                            reset
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </form>
