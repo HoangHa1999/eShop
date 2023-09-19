@@ -101,7 +101,7 @@ namespace eShop.AdminApp.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> Update(int id)
         {
             var languageId = HttpContext.Session.GetString(SystemConstants.AppSettings.DefaultLanguageId);
 
@@ -121,7 +121,7 @@ namespace eShop.AdminApp.Controllers
 
         [HttpPost]
         [Consumes("multipart/form-data")]
-        public async Task<IActionResult> Edit([FromForm] ProductUpdateRequest request)
+        public async Task<IActionResult> Update([FromForm] ProductUpdateRequest request)
         {
             if (!ModelState.IsValid)
                 return View(request);
@@ -144,13 +144,13 @@ namespace eShop.AdminApp.Controllers
             var productObj = await _productApiClient.GetById(id, languageId);
             var categories = await _categoryApiClient.GetAll(languageId);
             var categoryAssignRequest = new CategoryAssignRequest();
-            foreach (var role in categories)
+            foreach (var category in categories)
             {
                 categoryAssignRequest.Categories.Add(new SelectItem()
                 {
-                    Id = role.Id.ToString(),
-                    Name = role.Name,
-                    Selected = productObj.Categories.Contains(role.Name)
+                    Id = category.Id.ToString(),
+                    Name = category.Name,
+                    Selected = productObj.Categories.Contains(category.Name)
                 });
             }
             return categoryAssignRequest;

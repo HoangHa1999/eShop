@@ -1,0 +1,43 @@
+﻿@model eShop.ViewModels.Catalog.Products.CategoryAssignRequest
+
+@{
+    ViewData["Title"] = "Gán danh mục";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Gán danh mục</h1>
+    <a asp-action="Index" asp-controller="Product">&larr; Danh sách sản phẩm</a>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+
+        <div class="card-body">
+            <div class="table-responsive">
+        <form asp-action="CategoryAssign">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <input type="hidden" asp-for="Id" />
+                    @for (var i = 0; i < Model.Categories.Count; i++)
+                    {
+                        <div class="form-group">
+                            <label>
+                                @Model.Categories[i].Name
+                                <input type="checkbox" asp-for="Categories[i].Selected" />
+                                <input type="hidden" asp-for="Categories[i].Id" />
+                                <input type="hidden" asp-for="Categories[i].Name" />
+                            </label>
+                        </div>
+                    }
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+            </div>
+        </div>
+    </div>
+
+</div>
