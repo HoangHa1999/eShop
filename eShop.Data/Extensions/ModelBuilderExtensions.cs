@@ -10,7 +10,7 @@ namespace eShop.Data.Extensions
 {
     public static class ModelBuilderExtensions
     {
-       public static void Seed(this ModelBuilder modelBuilder)
+        public static void Seed(this ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<AppConfig>().HasData(
                 new AppConfig() { Key = "HomeTitle", Value = "This is home page of eShop" },
@@ -18,8 +18,8 @@ namespace eShop.Data.Extensions
                 new AppConfig() { Key = "HomeDescription", Value = "This is description of eShop" }
                 );
             modelBuilder.Entity<Language>().HasData(
-                new Language() { Id = "vi-VN", Name = "Tiếng Việt", IsDefault = true },
-                new Language() { Id = "en-US", Name = "English", IsDefault = false }
+                new Language() { Id = "vi", Name = "Tiếng Việt", IsDefault = true },
+                new Language() { Id = "en", Name = "English", IsDefault = false }
                 );
 
             modelBuilder.Entity<Category>().HasData(
@@ -50,7 +50,7 @@ namespace eShop.Data.Extensions
                     SeoAlias = "ao-nam",
                     SeoDescription = "Sản phẩm áo thời trang nam",
                     SeoTitle = "Sản phẩm áo thời trang nam",
-                    LanguageId = "vi-VN"
+                    LanguageId = "vi"
                 },
                 new CategoryTranslation()
                 {
@@ -60,7 +60,7 @@ namespace eShop.Data.Extensions
                     SeoAlias = "men-shirt",
                     SeoDescription = "The shirt products for men",
                     SeoTitle = "The shirt products for men",
-                    LanguageId = "en-US"
+                    LanguageId = "en"
                 },
                 new CategoryTranslation()
                 {
@@ -70,7 +70,7 @@ namespace eShop.Data.Extensions
                     SeoAlias = "ao-nu",
                     SeoDescription = "Sản phẩm áo thời trang nữ",
                     SeoTitle = "Sản phẩm áo thời trang nữ",
-                    LanguageId = "vi-VN"
+                    LanguageId = "vi"
                 },
                 new CategoryTranslation()
                 {
@@ -80,8 +80,8 @@ namespace eShop.Data.Extensions
                     SeoAlias = "women-shirt",
                     SeoDescription = "The shirt products for women",
                     SeoTitle = "The shirt products for women",
-                    LanguageId = "en-US"
-                } 
+                    LanguageId = "en"
+                }
                 );
 
             modelBuilder.Entity<Product>().HasData(
@@ -111,7 +111,7 @@ namespace eShop.Data.Extensions
                     Id = 1,
                     ProductId = 1,
                     Name = "Áo sơ mi trắng Việt Tiến",
-                    LanguageId = "vi-VN",
+                    LanguageId = "vi",
                     SeoAlias = "ao-so-mi-trang-viet-tien",
                     SeoDescription = "Áo sơ mi trắng Việt Tiến",
                     SeoTitle = "Áo sơ mi trắng Việt Tiến",
@@ -123,7 +123,7 @@ namespace eShop.Data.Extensions
                     Id = 2,
                     ProductId = 1,
                     Name = "Viet Tien Men T-Shirt",
-                    LanguageId = "en-US",
+                    LanguageId = "en",
                     SeoAlias = "viet-tien-men-t-shirt",
                     SeoDescription = "Viet Tien Men T-Shirt",
                     SeoTitle = "Viet Tien Men T-Shirt",
