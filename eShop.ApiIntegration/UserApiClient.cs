@@ -11,7 +11,7 @@ using Microsoft.Extensions.Configuration;
 using System.Net.Http.Headers;
 using Microsoft.AspNetCore.Http;
 
-namespace eShop.AdminApp.Services
+namespace eShop.ApiIntegration
 {
     public class UserApiClient : BaseApiClient, IUserApiClient
     {

@@ -10,7 +10,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using System;
-using eShop.AdminApp.Services;
+using eShop.ApiIntegration;
 using Microsoft.Extensions.Configuration;
 using eShop.Utilities.Constants;
 

@@ -10,7 +10,7 @@ using System;
 using eShop.ViewModels.Common;
 using System.Text;
 
-namespace eShop.AdminApp.Services
+namespace eShop.ApiIntegration
 {
     public class BaseApiClient
     {

@@ -12,7 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System;
 
-namespace eShop.AdminApp.Services
+namespace eShop.ApiIntegration
 {
     public class ProductApiClient : BaseApiClient, IProductApiClient
     {

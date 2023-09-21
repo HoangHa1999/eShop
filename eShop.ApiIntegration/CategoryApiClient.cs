@@ -1,11 +1,12 @@
-﻿using eShop.ViewModels.Catalog.Categories;
+﻿using eShop.ApiIntegration;
+using eShop.ViewModels.Catalog.Categories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace eShop.AdminApp.Services
+namespace eShop.ApiIntegration
 {
     public class CategoryApiClient : BaseApiClient, ICategoryApiClient
     {
