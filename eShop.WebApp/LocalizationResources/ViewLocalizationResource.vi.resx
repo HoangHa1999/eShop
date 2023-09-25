@@ -117,15 +117,36 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="All" xml:space="preserve">
+    <value>Tất cả</value>
+  </data>
+  <data name="categoryUrl" xml:space="preserve">
+    <value>danh-muc</value>
+  </data>
   <data name="Featured Products" xml:space="preserve">
     <value>Sản Phẩm Nổi Bật</value>
     <comment>/Home/Index</comment>
+  </data>
+  <data name="Filter by category" xml:space="preserve">
+    <value>Lọc theo danh mục</value>
   </data>
   <data name="Home" xml:space="preserve">
     <value>Trang Chủ</value>
     <comment>Layouts</comment>
   </data>
+  <data name="Latest Products" xml:space="preserve">
+    <value>Sản Phẩm Mới Nhất</value>
+  </data>
+  <data name="Page" xml:space="preserve">
+    <value>Trang</value>
+  </data>
+  <data name="Product Detail" xml:space="preserve">
+    <value>Chi Tiết Sản Phẩm</value>
+  </data>
   <data name="Products" xml:space="preserve">
     <value>Sản Phẩm</value>
+  </data>
+  <data name="productUrl" xml:space="preserve">
+    <value>san-pham</value>
   </data>
 </root>

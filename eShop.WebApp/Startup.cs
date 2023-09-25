@@ -1,3 +1,4 @@
+using eShop.ApiIntegration;
 using eShop.WebApp.LocalizationResources;
 using LazZiya.ExpressLocalization;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -29,11 +30,12 @@ namespace eShop.WebApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHttpClient();
             var cultures = new[]
-         {
-                new CultureInfo("en"),
-                new CultureInfo("vi"),
-            };
+                {
+                    new CultureInfo("en"),
+                    new CultureInfo("vi"),
+                 };
             services.AddControllersWithViews()
                 //.AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>())
                 .AddExpressLocalization<ExpressLocalizationResource, ViewLocalizationResource>(ops =>
@@ -65,6 +67,7 @@ namespace eShop.WebApp
                         o.DefaultRequestCulture = new RequestCulture("vi");
                     };
                 });
+
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
              .AddCookie(options =>
              {
@@ -77,10 +80,10 @@ namespace eShop.WebApp
                 options.IdleTimeout = TimeSpan.FromMinutes(30);
             });
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            //services.AddTransient<ISlideApiClient, SlideApiClient>();
-            //services.AddTransient<IProductApiClient, ProductApiClient>();
-            //services.AddTransient<ICategoryApiClient, CategoryApiClient>();
-            //services.AddTransient<IUserApiClient, UserApiClient>();
+            services.AddTransient<ISlideApiClient, SlideApiClient>();
+            services.AddTransient<IProductApiClient, ProductApiClient>();
+            services.AddTransient<ICategoryApiClient, CategoryApiClient>();
+            services.AddTransient<IUserApiClient, UserApiClient>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -101,15 +104,67 @@ namespace eShop.WebApp
 
             app.UseRouting();
 
+            app.UseAuthentication();
+
             app.UseAuthorization();
+
+            app.UseSession();
 
             app.UseRequestLocalization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{culture=vi}/{controller=Home}/{action=Index}/{id?}");
+                    name: "List Product En",
+                    pattern: "{culture}/products", new
+                    {
+                        controller = "Product",
+                        action = "Index"
+                    });
+
+                endpoints.MapControllerRoute(
+                    name: "List Product Vn",
+                    pattern: "{culture}/san-pham", new
+                    {
+                        controller = "Product",
+                        action = "Index"
+                    });
+
+                endpoints.MapControllerRoute(
+                    name: "Product Category En",
+                    pattern: "{culture}/categories/{id}", new
+                    {
+                        controller = "Product",
+                        action = "Category"
+                    });
+
+                endpoints.MapControllerRoute(
+                  name: "Product Category Vn",
+                  pattern: "{culture}/danh-muc/{id}", new
+                  {
+                      controller = "Product",
+                      action = "Category"
+                  });
+
+                endpoints.MapControllerRoute(
+                    name: "Product Detail En",
+                    pattern: "{culture}/products/{id}", new
+                    {
+                        controller = "Product",
+                        action = "Detail"
+                    });
+
+                endpoints.MapControllerRoute(
+                  name: "Product Detail Vn",
+                  pattern: "{culture}/san-pham/{id}", new
+                  {
+                      controller = "Product",
+                      action = "Detail"
+                  });
+
+                endpoints.MapControllerRoute(
+                     name: "default",
+                     pattern: "{culture=vi}/{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

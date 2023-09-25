@@ -91,8 +91,29 @@ namespace eShop.Application.Catalog.Products
             if (request.ThumbnailImage != null)
             {
                 var thumbnailImage = await _context.ProductImages.FirstOrDefaultAsync(i => i.IsDefault == true && i.ProductId == request.Id);
-                if (thumbnailImage != null)
+                if (thumbnailImage == null)
                 {
+                    product.ProductImages = new List<ProductImage>()
+                    {
+                    new ProductImage()
+                        {
+                        Caption = "Thumbnail image",
+                        DateCreated = DateTime.Now,
+                        FileSize = request.ThumbnailImage.Length,
+                        ImagePath = await this.SaveFile(request.ThumbnailImage),
+                        IsDefault = true,
+                        SortOrder = 1
+                        }
+                    };
+                }
+                else
+                {
+                    var images = _context.ProductImages.Where(i => i.ProductId == request.Id);
+                    foreach (var image in images)
+                    {
+                        await _storageService.DeleteFileAsync(image.ImagePath);
+                    }
+
                     thumbnailImage.FileSize = request.ThumbnailImage.Length;
                     thumbnailImage.ImagePath = await this.SaveFile(request.ThumbnailImage);
                     _context.ProductImages.Update(thumbnailImage);
@@ -230,10 +251,10 @@ namespace eShop.Application.Catalog.Products
                         from pic in ppic.DefaultIfEmpty()
                         join c in _context.Categories on pic.CategoryId equals c.Id into picc
                         from c in picc.DefaultIfEmpty()
-                            //join pi in _context.ProductImages on p.Id equals pi.ProductId into ppi
-                            //from pi in ppi.DefaultIfEmpty()
-                        where pt.LanguageId == request.LanguageId //&& pi.IsDefault == true
-                        select new { p, pt, pic };
+                        join pi in _context.ProductImages on p.Id equals pi.ProductId into ppi
+                        from pi in ppi.DefaultIfEmpty()
+                        where pt.LanguageId == request.LanguageId && pi.IsDefault == true
+                        select new { p, pt, pic, pi };
 
             if (!string.IsNullOrEmpty(request.Keyword))
                 query = query.Where(x => x.pt.Name.Contains(request.Keyword));
@@ -261,7 +282,7 @@ namespace eShop.Application.Catalog.Products
                     SeoTitle = x.pt.SeoTitle,
                     Stock = x.p.Stock,
                     ViewCount = x.p.ViewCount,
-                    //ThumbnailImage = x.pi.ImagePath
+                    ThumbnailImage = x.pi.ImagePath
                 })
                 .Distinct()
                 .ToListAsync();
@@ -395,6 +416,79 @@ namespace eShop.Application.Catalog.Products
             }
             await _context.SaveChangesAsync();
             return new ApiSuccessResult<bool>();
+        }
+
+        public async Task<List<ProductVm>> GetFeaturedProducts(string languageId, int take)
+        {
+            //1. Select join
+            var query = from p in _context.Products
+                        join pt in _context.ProductTranslations on p.Id equals pt.ProductId
+                        join pic in _context.ProductInCategories on p.Id equals pic.ProductId into ppic
+                        from pic in ppic.DefaultIfEmpty()
+                        join pi in _context.ProductImages on p.Id equals pi.ProductId into ppi
+                        from pi in ppi.DefaultIfEmpty()
+                        join c in _context.Categories on pic.CategoryId equals c.Id into picc
+                        from c in picc.DefaultIfEmpty()
+                        where pt.LanguageId == languageId && (pi == null || pi.IsDefault == true)
+                        && p.IsFeatured == true
+                        select new { p, pt, pic, pi };
+
+            var data = await query.OrderByDescending(x => x.p.DateCreated).Take(take)
+                .Select(x => new ProductVm()
+                {
+                    Id = x.p.Id,
+                    Name = x.pt.Name,
+                    DateCreated = x.p.DateCreated,
+                    Description = x.pt.Description,
+                    Details = x.pt.Details,
+                    LanguageId = x.pt.LanguageId,
+                    OriginalPrice = x.p.OriginalPrice,
+                    Price = x.p.Price,
+                    SeoAlias = x.pt.SeoAlias,
+                    SeoDescription = x.pt.SeoDescription,
+                    SeoTitle = x.pt.SeoTitle,
+                    Stock = x.p.Stock,
+                    ViewCount = x.p.ViewCount,
+                    ThumbnailImage = x.pi.ImagePath
+                }).ToListAsync();
+
+            return data;
+        }
+
+        public async Task<List<ProductVm>> GetLatestProducts(string languageId, int take)
+        {
+            //1. Select join
+            var query = from p in _context.Products
+                        join pt in _context.ProductTranslations on p.Id equals pt.ProductId
+                        join pic in _context.ProductInCategories on p.Id equals pic.ProductId into ppic
+                        from pic in ppic.DefaultIfEmpty()
+                        join pi in _context.ProductImages on p.Id equals pi.ProductId into ppi
+                        from pi in ppi.DefaultIfEmpty()
+                        join c in _context.Categories on pic.CategoryId equals c.Id into picc
+                        from c in picc.DefaultIfEmpty()
+                        where pt.LanguageId == languageId && (pi == null || pi.IsDefault == true)
+                        select new { p, pt, pic, pi };
+
+            var data = await query.OrderByDescending(x => x.p.DateCreated).Take(take)
+                .Select(x => new ProductVm()
+                {
+                    Id = x.p.Id,
+                    Name = x.pt.Name,
+                    DateCreated = x.p.DateCreated,
+                    Description = x.pt.Description,
+                    Details = x.pt.Details,
+                    LanguageId = x.pt.LanguageId,
+                    OriginalPrice = x.p.OriginalPrice,
+                    Price = x.p.Price,
+                    SeoAlias = x.pt.SeoAlias,
+                    SeoDescription = x.pt.SeoDescription,
+                    SeoTitle = x.pt.SeoTitle,
+                    Stock = x.p.Stock,
+                    ViewCount = x.p.ViewCount,
+                    ThumbnailImage = x.pi.ImagePath
+                }).ToListAsync();
+
+            return data;
         }
     }
 }

@@ -25,6 +25,7 @@ using eShop.ViewModels.System.Users;
 using eShop.Application.System.Roles;
 using eShop.Application.System.Languages;
 using eShop.Application.Catalog.Categories;
+using eShop.Application.Utilities.Slides;
 
 namespace eShop.BackendApi
 {
@@ -49,6 +50,8 @@ namespace eShop.BackendApi
 
             //Declare DI
             services.AddTransient<IStorageService, FileStorageService>();
+
+            services.AddTransient<ISlideService, SlideService>();
 
             services.AddTransient<IProductService, ProductService>();
 

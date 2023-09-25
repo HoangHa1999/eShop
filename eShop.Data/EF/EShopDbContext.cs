@@ -35,6 +35,7 @@ namespace eShop.Data.EF
             modelBuilder.ApplyConfiguration(new ProductImageConfiguration());
             modelBuilder.ApplyConfiguration(new PromotionConfiguration());
             modelBuilder.ApplyConfiguration(new TransactionConfiguration());
+            modelBuilder.ApplyConfiguration(new SlideConfiguration());
 
             modelBuilder.ApplyConfiguration(new AppRoleConfiguration());
             modelBuilder.ApplyConfiguration(new AppUserConfiguration());
@@ -51,6 +52,7 @@ namespace eShop.Data.EF
         }
 
         public DbSet<Product> Products { get; set; }
+
         public DbSet<Category> Categories { get; set; }
 
         public DbSet<AppConfig> AppConfigs { get; set; }
@@ -58,6 +60,7 @@ namespace eShop.Data.EF
         public DbSet<Cart> Carts { get; set; }
 
         public DbSet<CategoryTranslation> CategoryTranslations { get; set; }
+
         public DbSet<ProductInCategory> ProductInCategories { get; set; }
 
         public DbSet<Contact> Contacts { get; set; }
@@ -67,6 +70,7 @@ namespace eShop.Data.EF
         public DbSet<Order> Orders { get; set; }
 
         public DbSet<OrderDetail> OrderDetails { get; set; }
+
         public DbSet<ProductTranslation> ProductTranslations { get; set; }
 
         public DbSet<Promotion> Promotions { get; set; }
@@ -74,5 +78,7 @@ namespace eShop.Data.EF
         public DbSet<Transaction> Transactions { get; set; }
 
         public DbSet<ProductImage> ProductImages { get; set; }
+
+        public DbSet<Slide> Slides { get; set; }
     }
 }
