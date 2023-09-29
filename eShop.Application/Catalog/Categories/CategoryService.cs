@@ -6,6 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using eShop.Data.Entities;
+using eShop.Data.Enums;
+using eShop.Utilities.Exceptions;
 
 namespace eShop.Application.Catalog.Categories
 {
@@ -16,6 +19,29 @@ namespace eShop.Application.Catalog.Categories
         public CategoryService(EShopDbContext context)
         {
             _context = context;
+        }
+
+        public async Task<int> Create(CategoryCreateRequest request)
+        {
+            var category = new Category()
+            {
+                Status = Status.Active,
+                CategoryTranslations = new List<CategoryTranslation>()
+                {
+                    new CategoryTranslation()
+                    {
+                        Name = request.Name,
+                        SeoDescription = request.SeoDescription,
+                        SeoTitle = request.SeoTitle,
+                        SeoAlias = request.SeoAlias,
+                        LanguageId = request.LanguageId
+                    }
+                }
+            };
+
+            _context.Categories.Add(category);
+            await _context.SaveChangesAsync();
+            return category.Id;
         }
 
         public async Task<List<CategoryVm>> GetAll(string languageId)
@@ -44,6 +70,15 @@ namespace eShop.Application.Catalog.Categories
                 Name = x.ct.Name,
                 ParentId = x.c.ParentId
             }).FirstOrDefaultAsync();
+        }
+
+        public async Task<int> Delete(int categoryId)
+        {
+            var category = await _context.Categories.FindAsync(categoryId);
+            if (category == null) throw new EShopException($"Cannot find a category: {categoryId}");
+
+            _context.Categories.Remove(category);
+            return await _context.SaveChangesAsync();
         }
     }
 }

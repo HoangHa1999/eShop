@@ -1,5 +1,7 @@
 using eShop.ApiIntegration;
+using eShop.ViewModels.System.Users;
 using eShop.WebApp.LocalizationResources;
+using FluentValidation.AspNetCore;
 using LazZiya.ExpressLocalization;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
@@ -37,7 +39,7 @@ namespace eShop.WebApp
                     new CultureInfo("vi"),
                  };
             services.AddControllersWithViews()
-                //.AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>())
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>())
                 .AddExpressLocalization<ExpressLocalizationResource, ViewLocalizationResource>(ops =>
                 {
                     // When using all the culture providers, the localization process will
@@ -115,22 +117,6 @@ namespace eShop.WebApp
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
-                    name: "List Product En",
-                    pattern: "{culture}/products", new
-                    {
-                        controller = "Product",
-                        action = "Index"
-                    });
-
-                endpoints.MapControllerRoute(
-                    name: "List Product Vn",
-                    pattern: "{culture}/san-pham", new
-                    {
-                        controller = "Product",
-                        action = "Index"
-                    });
-
-                endpoints.MapControllerRoute(
                     name: "Product Category En",
                     pattern: "{culture}/categories/{id}", new
                     {
@@ -145,6 +131,38 @@ namespace eShop.WebApp
                       controller = "Product",
                       action = "Category"
                   });
+
+                endpoints.MapControllerRoute(
+                   name: "List Product in Cart En",
+                   pattern: "{culture}/cart", new
+                   {
+                       controller = "Cart",
+                       action = "Index"
+                   });
+
+                endpoints.MapControllerRoute(
+                    name: "List Product in Cart Vn",
+                    pattern: "{culture}/gio-hang", new
+                    {
+                        controller = "Cart",
+                        action = "Index"
+                    });
+
+                endpoints.MapControllerRoute(
+                   name: "List Product En",
+                   pattern: "{culture}/products", new
+                   {
+                       controller = "Product",
+                       action = "Category"
+                   });
+
+                endpoints.MapControllerRoute(
+                    name: "List Product Vn",
+                    pattern: "{culture}/san-pham", new
+                    {
+                        controller = "Product",
+                        action = "Category"
+                    });
 
                 endpoints.MapControllerRoute(
                     name: "Product Detail En",

@@ -191,7 +191,7 @@ namespace eShop.Application.Catalog.Products
                 Stock = product.Stock,
                 ViewCount = product.ViewCount,
                 Categories = categories,
-                ThumbnailImage = image != null ? image.ImagePath : "no-image.jpg"
+                ThumbnailImage = image != null ? _storageService.GetFileUrl(image.ImagePath) : "no-image.jpg"
             };
             return productViewModel;
         }
@@ -236,6 +236,8 @@ namespace eShop.Application.Catalog.Products
             var pagedResult = new PagedResult<ProductVm>()
             {
                 TotalRecords = totalRow,
+                PageSize = request.PageSize,
+                PageIndex = request.PageIndex,
                 Items = data
             };
 
@@ -282,7 +284,7 @@ namespace eShop.Application.Catalog.Products
                     SeoTitle = x.pt.SeoTitle,
                     Stock = x.p.Stock,
                     ViewCount = x.p.ViewCount,
-                    ThumbnailImage = x.pi.ImagePath
+                    ThumbnailImage = _storageService.GetFileUrl(x.pi.ImagePath)
                 })
                 .Distinct()
                 .ToListAsync();
@@ -362,7 +364,7 @@ namespace eShop.Application.Catalog.Products
                    DateCreated = i.DateCreated,
                    FileSize = i.FileSize,
                    Id = i.Id,
-                   ImagePath = i.ImagePath,
+                   ImagePath = _storageService.GetFileUrl(i.ImagePath),
                    IsDefault = i.IsDefault,
                    ProductId = i.ProductId,
                    SortOrder = i.SortOrder
@@ -381,7 +383,7 @@ namespace eShop.Application.Catalog.Products
                 DateCreated = image.DateCreated,
                 FileSize = image.FileSize,
                 Id = image.Id,
-                ImagePath = image.ImagePath,
+                ImagePath = _storageService.GetFileUrl(image.ImagePath),
                 IsDefault = image.IsDefault,
                 ProductId = image.ProductId,
                 SortOrder = image.SortOrder
@@ -449,7 +451,7 @@ namespace eShop.Application.Catalog.Products
                     SeoTitle = x.pt.SeoTitle,
                     Stock = x.p.Stock,
                     ViewCount = x.p.ViewCount,
-                    ThumbnailImage = x.pi.ImagePath
+                    ThumbnailImage = _storageService.GetFileUrl(x.pi.ImagePath)
                 }).ToListAsync();
 
             return data;
@@ -485,7 +487,7 @@ namespace eShop.Application.Catalog.Products
                     SeoTitle = x.pt.SeoTitle,
                     Stock = x.p.Stock,
                     ViewCount = x.p.ViewCount,
-                    ThumbnailImage = x.pi.ImagePath
+                    ThumbnailImage = _storageService.GetFileUrl(x.pi.ImagePath)
                 }).ToListAsync();
 
             return data;

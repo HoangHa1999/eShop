@@ -120,6 +120,15 @@
   <data name="All" xml:space="preserve">
     <value>All</value>
   </data>
+  <data name="Cart" xml:space="preserve">
+    <value>Cart</value>
+  </data>
+  <data name="Cart is empty" xml:space="preserve">
+    <value>Cart is empty</value>
+  </data>
+  <data name="cartUrl" xml:space="preserve">
+    <value>cart</value>
+  </data>
   <data name="categoryUrl" xml:space="preserve">
     <value>categories</value>
   </data>
@@ -137,6 +146,9 @@
   <data name="Latest Products" xml:space="preserve">
     <value>Latest Products</value>
   </data>
+  <data name="Login" xml:space="preserve">
+    <value>Login</value>
+  </data>
   <data name="Page" xml:space="preserve">
     <value>Page</value>
   </data>
@@ -148,5 +160,8 @@
   </data>
   <data name="productUrl" xml:space="preserve">
     <value>products</value>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>Register</value>
   </data>
 </root>

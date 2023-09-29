@@ -120,6 +120,15 @@
   <data name="All" xml:space="preserve">
     <value>Tất cả</value>
   </data>
+  <data name="Cart" xml:space="preserve">
+    <value>Giỏ hàng</value>
+  </data>
+  <data name="Cart is empty" xml:space="preserve">
+    <value>Giỏ hàng trống</value>
+  </data>
+  <data name="cartUrl" xml:space="preserve">
+    <value>gio-hang</value>
+  </data>
   <data name="categoryUrl" xml:space="preserve">
     <value>danh-muc</value>
   </data>
@@ -137,6 +146,9 @@
   <data name="Latest Products" xml:space="preserve">
     <value>Sản Phẩm Mới Nhất</value>
   </data>
+  <data name="Login" xml:space="preserve">
+    <value>Đăng nhập</value>
+  </data>
   <data name="Page" xml:space="preserve">
     <value>Trang</value>
   </data>
@@ -148,5 +160,8 @@
   </data>
   <data name="productUrl" xml:space="preserve">
     <value>san-pham</value>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>Đăng ký</value>
   </data>
 </root>

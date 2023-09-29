@@ -20,6 +20,8 @@ namespace eShop.ViewModels.Catalog.Products
                 .GreaterThan(0).WithMessage("Number of OriginalPrice must be greater than 0"); ;
 
             RuleFor(x => x.Stock).NotEmpty().WithMessage("Stock is required");
+
+            RuleFor(x => x.ThumbnailImage).NotEmpty().WithMessage("Thumbnail Image is required");
         }
     }
 }

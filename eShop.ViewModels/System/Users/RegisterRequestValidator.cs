@@ -29,6 +29,9 @@ namespace eShop.ViewModels.System.Users
             RuleFor(x => x.Password).NotEmpty().WithMessage("Password is required")
                 .MinimumLength(6).WithMessage("Password is at least 6 characters");
 
+            RuleFor(x => x.ConfirmPassword).NotEmpty().WithMessage("Confirm Password is required")
+                .MinimumLength(6).WithMessage("Confirm Password is at least 6 characters");
+
             RuleFor(x => x.ConfirmPassword)
             .Equal(x => x.Password)
                 .WithMessage("Password must match");

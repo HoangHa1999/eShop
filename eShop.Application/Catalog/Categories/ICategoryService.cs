@@ -11,5 +11,9 @@ namespace eShop.Application.Catalog.Categories
         Task<List<CategoryVm>> GetAll(string languageId);
 
         Task<CategoryVm> GetById(string languageId, int id);
+
+        Task<int> Create(CategoryCreateRequest request);
+
+        Task<int> Delete(int categoryId);
     }
 }

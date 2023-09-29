@@ -20,18 +20,6 @@ namespace eShop.WebApp.Controllers
             _categoryApiClient = categoryApiClient;
         }
 
-        public async Task<IActionResult> Index(string culture)
-        {
-            var products = await _productApiClient.GetPagings(new GetManageProductPagingRequest()
-            {
-                LanguageId = culture,
-            });
-            return View(new ProductViewModel()
-            {
-                Products = products.Items
-            }); ;
-        }
-
         public async Task<IActionResult> Detail(int id, string culture)
         {
             var product = await _productApiClient.GetById(id, culture);
@@ -43,16 +31,31 @@ namespace eShop.WebApp.Controllers
 
         public async Task<IActionResult> Category(int id, string culture)
         {
-            var products = await _productApiClient.GetPagings(new GetManageProductPagingRequest()
+            if (id != 0)
             {
-                CategoryId = id,
-                LanguageId = culture,
-            });
-            return View(new ProductCategoryViewModel()
+                var products = await _productApiClient.GetPagings(new GetManageProductPagingRequest()
+                {
+                    CategoryId = id,
+                    LanguageId = culture,
+                });
+
+                return View(new ProductCategoryViewModel()
+                {
+                    Category = await _categoryApiClient.GetById(culture, id),
+                    Products = products
+                }); ;
+            }
+            else
             {
-                Category = await _categoryApiClient.GetById(culture, id),
-                Products = products
-            }); ;
+                var products = await _productApiClient.GetPagings(new GetManageProductPagingRequest()
+                {
+                    LanguageId = culture,
+                });
+                return View(new ProductCategoryViewModel()
+                {
+                    Products = products
+                }); ;
+            }
         }
     }
 }
