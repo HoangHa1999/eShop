@@ -59,10 +59,12 @@ namespace eShop.ApiIntegration
             var response = await client.PostAsync(url, httpContent);
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<ApiSuccessResult<TResponse>>(await response.Content.ReadAsStringAsync());
+                var res = JsonConvert.DeserializeObject<ApiSuccessResult<TResponse>>(await response.Content.ReadAsStringAsync());
+                return res;
             }
 
-            return JsonConvert.DeserializeObject<ApiErrorResult<TResponse>>(await response.Content.ReadAsStringAsync());
+            var res1 = JsonConvert.DeserializeObject<ApiErrorResult<TResponse>>(await response.Content.ReadAsStringAsync());
+            return res1;
         }
 
         protected async Task<ApiResult<TResponse>> PutAsync<TResponse>(string url, object request)
