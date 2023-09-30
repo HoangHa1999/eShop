@@ -192,7 +192,7 @@ namespace eShop.Data.Migrations
                         new
                         {
                             Id = new Guid("9d436756-3f1c-41f3-b59f-9b221bfd1083"),
-                            ConcurrencyStamp = "20b2516f-e399-48bd-a386-5aacff40e530",
+                            ConcurrencyStamp = "47318cc2-6ca8-462d-93fe-7e51bbeadee6",
                             Description = "Administrator role",
                             Name = "admin",
                             NormalizedName = "admin"
@@ -282,7 +282,7 @@ namespace eShop.Data.Migrations
                         {
                             Id = new Guid("7af97aee-9a3f-4008-ac98-3ce383de2ec0"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "8f23cf42-f4d8-4b0a-808d-ad191cd814e9",
+                            ConcurrencyStamp = "82845dd1-7815-4cf6-8835-b8e183657f24",
                             Dob = new DateTime(1999, 12, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
@@ -291,7 +291,7 @@ namespace eShop.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "admin@gmail.com",
                             NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAEAACcQAAAAECN9elb+i7LNUX8PxUYf/ZO0qylVb7YkXbIGDwVpP1Db4duhWv2OaU3R4j7qmPcsrg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKn9anzuuBawSYhKBzJscMSkBcweStavqPUV6bxXcynbEeA4LeugIaAJT9WfNQIGog==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -425,7 +425,7 @@ namespace eShop.Data.Migrations
                         {
                             Id = 1,
                             CategoryId = 1,
-                            LanguageId = "vi-VN",
+                            LanguageId = "vi",
                             Name = "Áo nam",
                             SeoAlias = "ao-nam",
                             SeoDescription = "Sản phẩm áo thời trang nam",
@@ -435,7 +435,7 @@ namespace eShop.Data.Migrations
                         {
                             Id = 2,
                             CategoryId = 1,
-                            LanguageId = "en-US",
+                            LanguageId = "en",
                             Name = "Men Shirt",
                             SeoAlias = "men-shirt",
                             SeoDescription = "The shirt products for men",
@@ -445,7 +445,7 @@ namespace eShop.Data.Migrations
                         {
                             Id = 3,
                             CategoryId = 2,
-                            LanguageId = "vi-VN",
+                            LanguageId = "vi",
                             Name = "Áo nữ",
                             SeoAlias = "ao-nu",
                             SeoDescription = "Sản phẩm áo thời trang nữ",
@@ -455,7 +455,7 @@ namespace eShop.Data.Migrations
                         {
                             Id = 4,
                             CategoryId = 2,
-                            LanguageId = "en-US",
+                            LanguageId = "en",
                             Name = "Women Shirt",
                             SeoAlias = "women-shirt",
                             SeoDescription = "The shirt products for women",
@@ -521,13 +521,13 @@ namespace eShop.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "vi-VN",
+                            Id = "vi",
                             IsDefault = true,
                             Name = "Tiếng Việt"
                         },
                         new
                         {
-                            Id = "en-US",
+                            Id = "en",
                             IsDefault = false,
                             Name = "English"
                         });
@@ -612,6 +612,9 @@ namespace eShop.Data.Migrations
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool?>("IsFeatured")
+                        .HasColumnType("bit");
+
                     b.Property<decimal>("OriginalPrice")
                         .HasColumnType("decimal(18,2)");
 
@@ -636,7 +639,7 @@ namespace eShop.Data.Migrations
                         new
                         {
                             Id = 1,
-                            DateCreated = new DateTime(2023, 7, 27, 14, 23, 36, 164, DateTimeKind.Local).AddTicks(5512),
+                            DateCreated = new DateTime(2023, 9, 21, 14, 17, 37, 586, DateTimeKind.Local).AddTicks(2467),
                             OriginalPrice = 100000m,
                             Price = 200000m,
                             Stock = 0,
@@ -645,7 +648,7 @@ namespace eShop.Data.Migrations
                         new
                         {
                             Id = 2,
-                            DateCreated = new DateTime(2023, 7, 27, 14, 23, 36, 165, DateTimeKind.Local).AddTicks(5360),
+                            DateCreated = new DateTime(2023, 9, 21, 14, 17, 37, 586, DateTimeKind.Local).AddTicks(9760),
                             OriginalPrice = 200000m,
                             Price = 300000m,
                             Stock = 0,
@@ -775,7 +778,7 @@ namespace eShop.Data.Migrations
                             Id = 1,
                             Description = "Áo sơ mi trắng Việt Tiến",
                             Details = "Áo sơ mi trắng Việt Tiến",
-                            LanguageId = "vi-VN",
+                            LanguageId = "vi",
                             Name = "Áo sơ mi trắng Việt Tiến",
                             ProductId = 1,
                             SeoAlias = "ao-so-mi-trang-viet-tien",
@@ -787,7 +790,7 @@ namespace eShop.Data.Migrations
                             Id = 2,
                             Description = "Viet Tien Men T-Shirt",
                             Details = "Viet Tien Men T-Shirt",
-                            LanguageId = "en-US",
+                            LanguageId = "en",
                             Name = "Viet Tien Men T-Shirt",
                             ProductId = 1,
                             SeoAlias = "viet-tien-men-t-shirt",
@@ -836,6 +839,78 @@ namespace eShop.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Promotions");
+                });
+
+            modelBuilder.Entity("eShop.Data.Entities.Slide", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(200)")
+                        .HasMaxLength(200);
+
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(200)")
+                        .HasMaxLength(200);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(200)")
+                        .HasMaxLength(200);
+
+                    b.Property<int>("SortOrder")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(200)")
+                        .HasMaxLength(200);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Slides");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.",
+                            Image = "/img/carousel-1.jpg",
+                            Name = "Men-US Fashion",
+                            SortOrder = 1,
+                            Status = 1,
+                            Url = "#"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.",
+                            Image = "/img/carousel-2.jpg",
+                            Name = "Women-US Fashion",
+                            SortOrder = 2,
+                            Status = 1,
+                            Url = "#"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.",
+                            Image = "/img/carousel-3.jpg",
+                            Name = "Kids Fashion",
+                            SortOrder = 3,
+                            Status = 1,
+                            Url = "#"
+                        });
                 });
 
             modelBuilder.Entity("eShop.Data.Entities.Transaction", b =>

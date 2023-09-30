@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace eShop.ViewModels.System.Users
 {
@@ -28,13 +29,12 @@ namespace eShop.ViewModels.System.Users
             RuleFor(x => x.Password).NotEmpty().WithMessage("Password is required")
                 .MinimumLength(6).WithMessage("Password is at least 6 characters");
 
-            RuleFor(x => x).Custom((request, context) =>
-            {
-                if (request.Password != request.ConfirmPassword)
-                {
-                    context.AddFailure("Confirm password is not match");
-                }
-            });
+            RuleFor(x => x.ConfirmPassword).NotEmpty().WithMessage("Confirm Password is required")
+                .MinimumLength(6).WithMessage("Confirm Password is at least 6 characters");
+
+            RuleFor(x => x.ConfirmPassword)
+            .Equal(x => x.Password)
+                .WithMessage("Password must match");
         }
     }
 }
