@@ -14,8 +14,8 @@
     <div class="row px-xl-5">
         <div class="col-12">
             <nav class="breadcrumb bg-light mb-30">
-                <a class="breadcrumb-item text-dark" href="#"><localize>Home</localize></a>
-                <a class="breadcrumb-item text-dark" href="#"><localize>Products</localize></a>
+                <a class="breadcrumb-item text-dark" href="/"><localize>Home</localize></a>
+                <a class="breadcrumb-item text-dark" href="/@culture.Name/@_loc["productUrl"]"><localize>Products</localize></a>
                 <span class="breadcrumb-item active"><localize>Product Detail</localize></span>
             </nav>
         </div>
@@ -63,7 +63,7 @@
                     </div>
                     <small class="pt-1">(99 Reviews)</small>
                 </div>
-                <h3 class="font-weight-semi-bold mb-4">@Model.Product.Price.ToString("C", culture)</h3>
+                <h3 class="font-weight-semi-bold mb-4">@Model.Product.Price.ToString("N0")</h3>
                 <p class="mb-4">
                     @Html.Raw(@Model.Product.Details)
                 </p>
@@ -124,14 +124,14 @@
                                 <i class="fa fa-minus"></i>
                             </button>
                         </div>
-                        <input type="text" class="form-control bg-secondary border-0 text-center" value="1">
+                        <input id="txt_quantity" type="text" class="form-control bg-secondary border-0 text-center" value="1">
                         <div class="input-group-btn">
                             <button class="btn btn-primary btn-plus">
                                 <i class="fa fa-plus"></i>
                             </button>
                         </div>
                     </div>
-                    <button class="btn btn-primary px-3">
+                    <button class="btn btn-primary px-3 btn-add" data-id="@Model.Product.Id">
                         <i class="fa fa-shopping-cart mr-1"></i> Add To
                         Cart
                     </button>

@@ -17,11 +17,11 @@
     <div class="row px-xl-5">
         <div class="col-12">
             <nav class="breadcrumb bg-light mb-30">
-                <a class="breadcrumb-item text-dark" href="#">
+                <a class="breadcrumb-item text-dark" href="/">
                     <localize>Home</localize>
                 </a>
                 <span class="breadcrumb-item active">
-                    <localize>Cart</localize></a>
+                    <localize>Cart</localize>
                 </span>
             </nav>
         </div>
@@ -57,27 +57,29 @@ else if(Model.Count > 0){
                     </tr>
                 </thead>
                 <tbody class="align-middle">
-                    @foreach(var product in Model)
-                    {       
+                      
+                        @foreach(var product in Model)
+                    {  
+                      
                     <tr>
-                            <td class="align-middle"><img src="@(Configuration["BaseAddress"] + product.Image)" alt="@product.Name" style="width: 50px;"> Product Name</td>
-                            <td class="align-middle">@product.Price.ToString("C", culture)</td>
+                                <td class="align-middle"><img src="@(Configuration["BaseAddress"] + product.Image)" alt="@product.Name" style="width: 50px;"> @product.Name</td>
+                                <td class="align-middle">@product.Price.ToString("N0")</td>
                         <td class="align-middle">
                             <div class="input-group quantity mx-auto" style="width: 100px;">
                                 <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-primary btn-minus" data-id="@product.ProductId">
+                                    <button class="btn btn-sm btn-primary btn-minus btn-update" data-id="@product.ProductId">
                                         <i class="fa fa-minus"></i>
                                     </button>
                                 </div>
                                         <input id="txt_quantity_@product.ProductId" type="text" class="form-control form-control-sm bg-secondary border-0 text-center" value="@product.Quantity">
                                 <div class="input-group-btn">
-                                            <button class="btn btn-sm btn-primary btn-plus" data-id="@product.ProductId">
+                                            <button class="btn btn-sm btn-primary btn-plus btn-update" data-id="@product.ProductId">
                                         <i class="fa fa-plus"></i>
                                     </button>
                                 </div>
                             </div>
                         </td>
-                            <td class="align-middle">@((product.Price * product.Quantity).ToString("C", culture))</td>
+                                <td class="align-middle">@((product.Price * product.Quantity).ToString("N0"))</td>
                                 <td class="align-middle"><button data-id="@product.ProductId" class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button></td>
                     </tr>
                    }
@@ -93,24 +95,27 @@ else if(Model.Count > 0){
                     </div>
                 </div>
             </form>
+                @{
+                    var total = @Model.Sum(x => x.Quantity * x.Price);
+                }
             <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Cart Summary</span></h5>
             <div class="bg-light p-30 mb-5">
                 <div class="border-bottom pb-2">
                     <div class="d-flex justify-content-between mb-3">
                         <h6>Subtotal</h6>
-                        <h6>$150</h6>
+                            <h6>@total.ToString("N0")</h6>
                     </div>
-                    <div class="d-flex justify-content-between">
+                    @*<div class="d-flex justify-content-between">
                         <h6 class="font-weight-medium">Shipping</h6>
                         <h6 class="font-weight-medium">$10</h6>
-                    </div>
+                    </div>*@
                 </div>
                 <div class="pt-2">
                     <div class="d-flex justify-content-between mt-2">
                         <h5>Total</h5>
-                        <h5>$160</h5>
+                            <h5>@total.ToString("N0")</h5>
                     </div>
-                    <button class="btn btn-block btn-primary font-weight-bold my-3 py-3">Proceed To Checkout</button>
+                        <a href="/@culture/Cart/Checkout" class="btn btn-block btn-primary font-weight-bold my-3 py-3">Proceed To Checkout</a>
                 </div>
             </div>
         </div>

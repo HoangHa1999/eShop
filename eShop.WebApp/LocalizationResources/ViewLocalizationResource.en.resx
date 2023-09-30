@@ -132,6 +132,9 @@
   <data name="categoryUrl" xml:space="preserve">
     <value>categories</value>
   </data>
+  <data name="Checkout" xml:space="preserve">
+    <value>Checkout</value>
+  </data>
   <data name="Featured Products" xml:space="preserve">
     <value>Featured Products</value>
     <comment>/Home/Index</comment>

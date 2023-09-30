@@ -13,8 +13,8 @@
     <div class="row px-xl-5">
         <div class="col-12">
             <nav class="breadcrumb bg-light mb-30">
-                <a class="breadcrumb-item text-dark" href="#"><localize>Home</localize></a>
-                <a class="breadcrumb-item text-dark" href="#"><localize>Products</localize></a>
+                <a class="breadcrumb-item text-dark" href="/"><localize>Home</localize></a>
+                <a class="breadcrumb-item text-dark" href="/@culture.Name/@_loc["productUrl"]"><localize>Products</localize></a>
                 @if (Model.Category!= null)
                 {
                     <span class="breadcrumb-item active">@Model.Category.Name</span>
@@ -81,7 +81,7 @@
                             <div class="text-center py-4">
                                 <a class="h6 text-decoration-none text-truncate" href="@url">@product.Name</a>
                                 <div class="d-flex align-items-center justify-content-center mt-2">
-                                    <h5>@product.Price.ToString("C", culture)</h5><h6 class="text-muted ml-2"><del>@product.Price.ToString("C", culture)</del></h6>
+                                    <h5>@product.Price.ToString("N0")</h5><h6 class="text-muted ml-2"><del>@product.Price.ToString("C", culture)</del></h6>
                                 </div>
                                 <div class="d-flex align-items-center justify-content-center mb-1">
                                     <small class="fa fa-star text-primary mr-1"></small>

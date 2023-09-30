@@ -26,6 +26,7 @@ using eShop.Application.System.Roles;
 using eShop.Application.System.Languages;
 using eShop.Application.Catalog.Categories;
 using eShop.Application.Utilities.Slides;
+using eShop.Application.Sales;
 
 namespace eShop.BackendApi
 {
@@ -64,6 +65,8 @@ namespace eShop.BackendApi
             services.AddTransient<RoleManager<AppRole>, RoleManager<AppRole>>();
 
             services.AddTransient<ILanguageService, LanguageService>();
+
+            services.AddTransient<IOrderService, OrderService>();
 
             services.AddTransient<IRoleService, RoleService>();
 

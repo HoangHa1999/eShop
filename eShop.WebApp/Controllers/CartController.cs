@@ -14,10 +14,12 @@ namespace eShop.WebApp.Controllers
     public class CartController : Controller
     {
         private readonly IProductApiClient _productApiClient;
+        private readonly IOrderApiClient _orderApiClient;
 
-        public CartController(IProductApiClient productApiClient)
+        public CartController(IProductApiClient productApiClient, IOrderApiClient orderApiClient)
         {
             _productApiClient = productApiClient;
+            _orderApiClient = orderApiClient;
         }
 
         public IActionResult Index()
@@ -44,7 +46,8 @@ namespace eShop.WebApp.Controllers
                 orderDetails.Add(new OrderDetailVm()
                 {
                     ProductId = item.ProductId,
-                    Quantity = item.Quantity
+                    Quantity = item.Quantity,
+                    Price = item.Price,
                 });
             }
             var checkoutRequest = new CheckoutRequest()
@@ -55,8 +58,17 @@ namespace eShop.WebApp.Controllers
                 PhoneNumber = request.CheckoutModel.PhoneNumber,
                 OrderDetails = orderDetails
             };
-            //TODO: Add to API
-            TempData["SuccessMsg"] = "Order puschased successful";
+            var result = _orderApiClient.CreateOrder(checkoutRequest);
+            if (result.Id != 0)
+            {
+                HttpContext.Session.Remove(SystemConstants.CartSession);
+                TempData["SuccessMsg"] = "Order puschased successful";
+            }
+            else
+            {
+                TempData["FailedMsg"] = "Order puschased failed";
+            }
+
             return View(model);
         }
 

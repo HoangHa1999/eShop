@@ -132,6 +132,9 @@
   <data name="categoryUrl" xml:space="preserve">
     <value>danh-muc</value>
   </data>
+  <data name="Checkout" xml:space="preserve">
+    <value>Thanh toán</value>
+  </data>
   <data name="Featured Products" xml:space="preserve">
     <value>Sản Phẩm Nổi Bật</value>
     <comment>/Home/Index</comment>

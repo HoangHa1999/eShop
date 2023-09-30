@@ -4,19 +4,13 @@ var CartController = function () {
     }
 
     function registerEvents() {
-        $('body').on('click', '.btn-plus', function (e) {
+        $('body').on('click', '.btn-update', function (e) {
             e.preventDefault();
             const id = $(this).data('id');
             const quantity = parseInt($('#txt_quantity_' + id).val());
             updateCart(id, quantity);
         });
 
-        $('body').on('click', '.btn-minus', function (e) {
-            e.preventDefault();
-            const id = $(this).data('id');
-            const quantity = parseInt($('#txt_quantity_' + id).val());
-            updateCart(id, quantity);
-        });
         $('body').on('click', '.btn-danger', function (e) {
             e.preventDefault();
             const id = $(this).data('id');
