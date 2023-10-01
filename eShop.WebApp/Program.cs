@@ -76,6 +76,8 @@ builder.Services.AddTransient<ICategoryApiClient, CategoryApiClient>();
 builder.Services.AddTransient<IUserApiClient, UserApiClient>();
 builder.Services.AddTransient<IOrderApiClient, OrderApiClient>();
 
+builder.Services.AddRazorPages();
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -101,9 +103,9 @@ app.UseSession();
 
 app.UseRequestLocalization();
 
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllerRoute(
+app.MapRazorPages();
+
+app.MapControllerRoute(
         name: "Product Category En",
         pattern: "{culture}/categories/{id}", new
         {
@@ -111,65 +113,64 @@ app.UseEndpoints(endpoints =>
             action = "Category"
         });
 
-    endpoints.MapControllerRoute(
-      name: "Product Category Vn",
-      pattern: "{culture}/danh-muc/{id}", new
-      {
-          controller = "Product",
-          action = "Category"
-      });
+app.MapControllerRoute(
+  name: "Product Category Vn",
+  pattern: "{culture}/danh-muc/{id}", new
+  {
+      controller = "Product",
+      action = "Category"
+  });
 
-    endpoints.MapControllerRoute(
-       name: "List Product in Cart En",
-       pattern: "{culture}/cart", new
-       {
-           controller = "Cart",
-           action = "Index"
-       });
+app.MapControllerRoute(
+   name: "List Product in Cart En",
+   pattern: "{culture}/cart", new
+   {
+       controller = "Cart",
+       action = "Index"
+   });
 
-    endpoints.MapControllerRoute(
-        name: "List Product in Cart Vn",
-        pattern: "{culture}/gio-hang", new
-        {
-            controller = "Cart",
-            action = "Index"
-        });
+app.MapControllerRoute(
+    name: "List Product in Cart Vn",
+    pattern: "{culture}/gio-hang", new
+    {
+        controller = "Cart",
+        action = "Index"
+    });
 
-    endpoints.MapControllerRoute(
-       name: "List Product En",
-       pattern: "{culture}/products", new
-       {
-           controller = "Product",
-           action = "Category"
-       });
+app.MapControllerRoute(
+   name: "List Product En",
+   pattern: "{culture}/products", new
+   {
+       controller = "Product",
+       action = "Category"
+   });
 
-    endpoints.MapControllerRoute(
-        name: "List Product Vn",
-        pattern: "{culture}/san-pham", new
-        {
-            controller = "Product",
-            action = "Category"
-        });
+app.MapControllerRoute(
+    name: "List Product Vn",
+    pattern: "{culture}/san-pham", new
+    {
+        controller = "Product",
+        action = "Category"
+    });
 
-    endpoints.MapControllerRoute(
-        name: "Product Detail En",
-        pattern: "{culture}/products/{id}", new
-        {
-            controller = "Product",
-            action = "Detail"
-        });
+app.MapControllerRoute(
+    name: "Product Detail En",
+    pattern: "{culture}/products/{id}", new
+    {
+        controller = "Product",
+        action = "Detail"
+    });
 
-    endpoints.MapControllerRoute(
-      name: "Product Detail Vn",
-      pattern: "{culture}/san-pham/{id}", new
-      {
-          controller = "Product",
-          action = "Detail"
-      });
+app.MapControllerRoute(
+  name: "Product Detail Vn",
+  pattern: "{culture}/san-pham/{id}", new
+  {
+      controller = "Product",
+      action = "Detail"
+  });
 
-    endpoints.MapControllerRoute(
-         name: "default",
-         pattern: "{culture=vi}/{controller=Home}/{action=Index}/{id?}");
-});
+app.MapControllerRoute(
+     name: "default",
+     pattern: "{culture=vi}/{controller=Home}/{action=Index}/{id?}");
 
 app.Run();

@@ -44,6 +44,8 @@ builder.Services.AddSession(options =>
 
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
+builder.Services.AddRazorPages();
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -67,11 +69,10 @@ app.UseAuthorization();
 
 app.UseSession();
 
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllerRoute(
+app.MapRazorPages();
+
+app.MapControllerRoute(
         name: "default",
         pattern: "{controller=Home}/{action=Index}/{id?}");
-});
 
 app.Run();
