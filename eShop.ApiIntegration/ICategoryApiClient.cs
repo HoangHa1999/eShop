@@ -13,6 +13,8 @@ namespace eShop.ApiIntegration
 
         Task<ApiResult<int>> CreateCategory(CategoryCreateRequest request);
 
+        Task<ApiResult<int>> UpdateCategory(CategoryUpdateRequest request);
+
         Task<bool> DeleteCategory(int id);
     }
 }

@@ -76,8 +76,6 @@ builder.Services.AddTransient<ICategoryApiClient, CategoryApiClient>();
 builder.Services.AddTransient<IUserApiClient, UserApiClient>();
 builder.Services.AddTransient<IOrderApiClient, OrderApiClient>();
 
-builder.Services.AddRazorPages();
-
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -102,8 +100,6 @@ app.UseAuthorization();
 app.UseSession();
 
 app.UseRequestLocalization();
-
-app.MapRazorPages();
 
 app.MapControllerRoute(
         name: "Product Category En",

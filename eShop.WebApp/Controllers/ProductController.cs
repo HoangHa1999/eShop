@@ -29,7 +29,7 @@ namespace eShop.WebApp.Controllers
             });
         }
 
-        public async Task<IActionResult> Category(int id, string culture)
+        public async Task<IActionResult> Category(int id, string culture, int page=1)
         {
             if (id != 0)
             {
@@ -37,6 +37,7 @@ namespace eShop.WebApp.Controllers
                 {
                     CategoryId = id,
                     LanguageId = culture,
+                    PageIndex = page,
                 });
 
                 return View(new ProductCategoryViewModel()
@@ -50,6 +51,7 @@ namespace eShop.WebApp.Controllers
                 var products = await _productApiClient.GetPagings(new GetManageProductPagingRequest()
                 {
                     LanguageId = culture,
+                    PageIndex = page,
                 });
                 return View(new ProductCategoryViewModel()
                 {

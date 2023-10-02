@@ -59,6 +59,40 @@ namespace eShop.AdminApp.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> Update(int id)
+        {
+            var languageId = HttpContext.Session.GetString(SystemConstants.AppSettings.DefaultLanguageId);
+
+            var category = await _categoryApiClient.GetById(languageId, id);
+            var editVm = new CategoryUpdateRequest()
+            {
+                Id = category.Id,
+                Name = category.Name,
+                SeoAlias = category.SeoAlias,
+                SeoDescription = category.SeoDescription,
+                SeoTitle = category.SeoTitle
+            };
+            return View(editVm);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update(CategoryUpdateRequest request)
+        {
+            if (!ModelState.IsValid)
+                return View(request);
+
+            var result = await _categoryApiClient.UpdateCategory(request);
+            if (result.IsSuccessed)
+            {
+                TempData["result"] = "Cập nhật danh mục thành công";
+                return RedirectToAction("Index");
+            }
+
+            ModelState.AddModelError("", "Cập nhật danh mục thất bại");
+            return View(request);
+        }
+
+        [HttpGet]
         public IActionResult Delete(int id)
         {
             return View(new CategoryDeleteRequest()

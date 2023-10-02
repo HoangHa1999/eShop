@@ -14,6 +14,7 @@ using System.IO;
 using System.Net.Http.Headers;
 using eShop.Application.Common;
 using eShop.ViewModels.Catalog.ProductImages;
+using eShop.Utilities.Constants;
 
 namespace eShop.Application.Catalog.Products
 {
@@ -30,6 +31,35 @@ namespace eShop.Application.Catalog.Products
 
         public async Task<int> Create(ProductCreateRequest request)
         {
+            var languages = _context.Languages;
+            var translations = new List<ProductTranslation>();
+            foreach (var language in languages)
+            {
+                if (language.Id == request.LanguageId)
+                {
+                    translations.Add(new ProductTranslation()
+                    {
+                        Name = request.Name,
+                        Description = request.Description,
+                        Details = request.Details,
+                        SeoDescription = request.SeoDescription,
+                        SeoAlias = request.SeoAlias,
+                        SeoTitle = request.SeoTitle,
+                        LanguageId = request.LanguageId
+                    });
+                }
+                else
+                {
+                    translations.Add(new ProductTranslation()
+                    {
+                        Name = SystemConstants.ProductConstants.NA,
+                        Description = SystemConstants.ProductConstants.NA,
+                        SeoAlias = SystemConstants.ProductConstants.NA,
+                        LanguageId = language.Id
+                    });
+                }
+            }
+
             var product = new Product()
             {
                 Price = request.Price,
@@ -37,19 +67,7 @@ namespace eShop.Application.Catalog.Products
                 Stock = request.Stock,
                 ViewCount = 0,
                 DateCreated = DateTime.Now,
-                ProductTranslations = new List<ProductTranslation>()
-                {
-                    new ProductTranslation()
-                    {
-                        Name = request.Name,
-                        Description = request.Description,
-                        Details = request.Details,
-                        SeoDescription = request.SeoDescription,
-                        SeoTitle = request.SeoTitle,
-                        SeoAlias = request.SeoAlias,
-                        LanguageId = request.LanguageId
-                    }
-                }
+                ProductTranslations = translations
             };
 
             //Save Image
@@ -266,6 +284,8 @@ namespace eShop.Application.Catalog.Products
                 query = query.Where(p => p.pic.CategoryId == request.CategoryId);
             }
 
+            int totalRow = await query.Distinct().CountAsync();
+
             //3. Paging
             var data = await query.Skip((request.PageIndex - 1) * request.PageSize)
                 .Take(request.PageSize)
@@ -288,8 +308,6 @@ namespace eShop.Application.Catalog.Products
                 })
                 .Distinct()
                 .ToListAsync();
-
-            int totalRow = data.Count;
 
             //4. Select and projection
             var pagedResult = new PagedResult<ProductVm>()

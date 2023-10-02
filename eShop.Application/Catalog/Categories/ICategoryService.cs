@@ -14,6 +14,8 @@ namespace eShop.Application.Catalog.Categories
 
         Task<int> Create(CategoryCreateRequest request);
 
+        Task<int> Update(CategoryUpdateRequest request);
+
         Task<int> Delete(int categoryId);
     }
 }

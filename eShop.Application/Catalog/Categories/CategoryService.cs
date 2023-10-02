@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using eShop.Data.Entities;
 using eShop.Data.Enums;
 using eShop.Utilities.Exceptions;
+using eShop.Utilities.Constants;
 
 namespace eShop.Application.Catalog.Categories
 {
@@ -23,20 +24,37 @@ namespace eShop.Application.Catalog.Categories
 
         public async Task<int> Create(CategoryCreateRequest request)
         {
-            var category = new Category()
+            var languages = _context.Languages;
+            var translations = new List<CategoryTranslation>();
+            foreach (var language in languages)
             {
-                Status = Status.Active,
-                CategoryTranslations = new List<CategoryTranslation>()
+                if (language.Id == request.LanguageId)
                 {
-                    new CategoryTranslation()
+                    translations.Add(new CategoryTranslation()
                     {
                         Name = request.Name,
                         SeoDescription = request.SeoDescription,
-                        SeoTitle = request.SeoTitle,
                         SeoAlias = request.SeoAlias,
+                        SeoTitle = request.SeoTitle,
                         LanguageId = request.LanguageId
-                    }
+                    });
                 }
+                else
+                {
+                    translations.Add(new CategoryTranslation()
+                    {
+                        Name = SystemConstants.ProductConstants.NA,
+                        SeoDescription = SystemConstants.ProductConstants.NA,
+                        SeoAlias = SystemConstants.ProductConstants.NA,
+                        SeoTitle = SystemConstants.ProductConstants.NA,
+                        LanguageId = language.Id
+                    });
+                }
+            }
+            var category = new Category()
+            {
+                Status = Status.Active,
+                CategoryTranslations = translations
             };
 
             _context.Categories.Add(category);
@@ -54,6 +72,9 @@ namespace eShop.Application.Catalog.Categories
             {
                 Id = x.c.Id,
                 Name = x.ct.Name,
+                SeoAlias = x.ct.SeoAlias,
+                SeoDescription = x.ct.SeoDescription,
+                SeoTitle = x.ct.SeoTitle,
                 ParentId = x.c.ParentId
             }).ToListAsync();
         }
@@ -68,8 +89,26 @@ namespace eShop.Application.Catalog.Categories
             {
                 Id = x.c.Id,
                 Name = x.ct.Name,
+                SeoAlias = x.ct.SeoAlias,
+                SeoDescription = x.ct.SeoDescription,
+                SeoTitle = x.ct.SeoTitle,
                 ParentId = x.c.ParentId
             }).FirstOrDefaultAsync();
+        }
+
+        public async Task<int> Update(CategoryUpdateRequest request)
+        {
+            var category = await _context.Categories.FindAsync(request.Id);
+            var categoryTranslation = await _context.CategoryTranslations.FirstOrDefaultAsync(x => x.CategoryId == request.Id && x.LanguageId == request.LanguageId);
+
+            if (category == null || categoryTranslation == null) throw new EShopException($"Cannot find a category: {request.Id}");
+
+            categoryTranslation.Name = request.Name;
+            categoryTranslation.SeoTitle = request.SeoTitle;
+            categoryTranslation.SeoAlias = request.SeoAlias;
+            categoryTranslation.SeoDescription = request.SeoDescription;
+
+            return await _context.SaveChangesAsync();
         }
 
         public async Task<int> Delete(int categoryId)

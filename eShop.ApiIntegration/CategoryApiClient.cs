@@ -56,6 +56,31 @@ namespace eShop.ApiIntegration
             return JsonConvert.DeserializeObject<ApiErrorResult<int>>(await response.Content.ReadAsStringAsync());
         }
 
+        public async Task<ApiResult<int>> UpdateCategory(CategoryUpdateRequest request)
+        {
+            var sessions = _httpContextAccessor
+                .HttpContext
+                .Session
+                .GetString(SystemConstants.AppSettings.Token);
+
+            request.LanguageId = _httpContextAccessor.HttpContext.Session.GetString(SystemConstants.AppSettings.DefaultLanguageId);
+
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration[SystemConstants.AppSettings.BaseAddress]);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
+
+            var json = JsonConvert.SerializeObject(request);
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await client.PutAsync($"/api/categories/{request.Id}", httpContent);
+            if (response.IsSuccessStatusCode)
+            {
+                return JsonConvert.DeserializeObject<ApiSuccessResult<int>>(await response.Content.ReadAsStringAsync());
+            }
+
+            return JsonConvert.DeserializeObject<ApiErrorResult<int>>(await response.Content.ReadAsStringAsync());
+        }
+
         public async Task<bool> DeleteCategory(int id)
         {
             return await DeleteAsync($"/api/categories/" + id);
