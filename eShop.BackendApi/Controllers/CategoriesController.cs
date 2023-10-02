@@ -51,6 +51,23 @@ namespace eShop.BackendApi.Controllers
             return CreatedAtAction(nameof(GetById), new { id = categoryId }, category);
         }
 
+        [HttpPut("{categoryId}")]
+        [Authorize]
+        public async Task<IActionResult> update([FromRoute] int categoryId, [FromBody] CategoryUpdateRequest request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            request.Id = categoryId;
+            var affectedResult = await _categoryService.Update(request);
+            if (affectedResult == 0)
+            {
+                return BadRequest();
+            }
+
+            return Ok();
+        }
+
         [HttpDelete("{categoryId}")]
         [Authorize]
         public async Task<IActionResult> Delete(int categoryId)

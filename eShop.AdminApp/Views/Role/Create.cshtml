@@ -1,0 +1,39 @@
+﻿@model eShop.ViewModels.System.Roles.RoleCreateRequest
+
+@{
+    ViewData["Title"] = "Tạo mới quyền";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Tạo mới quyền </h1>
+    <a asp-action="Index" asp-controller="Role">&larr; Danh sách quyền</a>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Name" class="control-label"></label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Description" class="control-label"></label>
+                        <input asp-for="Description" class="form-control" />
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,7 +1,7 @@
-﻿@model List<eShop.ViewModels.Catalog.Categories.CategoryVm>
+﻿@model IEnumerable<eShop.ViewModels.System.Roles.RoleVm>
 
 @{
-    ViewData["Title"] = "Danh sách danh mục";
+    ViewData["Title"] = "Danh sách quyền";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -16,14 +16,14 @@
 <div class="container-fluid">
 
     <!-- Page Heading -->
-    <a asp-action="Create" asp-controller="Category">&larr; Tạo mới danh mục</a>
+    <a asp-action="Create" asp-controller="Role">&larr; Tạo mới quyền</a>
 
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header">
             <div class="row">
                 <div class="col-md-6 col-xs-12">
-                    <h2 class="m-0 font-weight-bold text-primary">Danh sách danh mục</h2>
+                    <h2 class="m-0 font-weight-bold text-primary">Danh sách quyền</h2>
                 </div>
 
             </div>
@@ -42,26 +42,19 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-
-                            <th>Id</th>
                             <th>Name</th>
-                            <th>Parent</th>
-
+                            <th>Description</th>
                         </tr>
                     </thead>
-
                     <tbody>
                         @foreach (var item in Model)
                         {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Id)
-                                </td>
+                            <tr>                             
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Name)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.ParentId)
+                                    @Html.DisplayFor(modelItem => item.Description)
                                 </td>
                                 <td>
                                     @Html.ActionLink("Sửa", "Update", new { id = item.Id }) |

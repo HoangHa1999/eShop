@@ -76,8 +76,8 @@ namespace eShop.AdminApp.Controllers
         [HttpGet]
         public async Task<IActionResult> CategoryAssign(int id)
         {
-            var roleAssignRequest = await GetCategoryAssignRequest(id);
-            return View(roleAssignRequest);
+            var categoryAssignRequest = await GetCategoryAssignRequest(id);
+            return View(categoryAssignRequest);
         }
 
         [HttpPost]
