@@ -13,6 +13,8 @@ using System;
 using eShop.ApiIntegration;
 using Microsoft.Extensions.Configuration;
 using eShop.Utilities.Constants;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace eShop.AdminApp.Controllers
 {
@@ -49,19 +51,31 @@ namespace eShop.AdminApp.Controllers
                 return View();
             }
             var userPrincipal = this.ValidateToken(result.ResultObj);
-            var authProperties = new AuthenticationProperties
-            {
-                ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(10),
-                IsPersistent = false
-            };
-            HttpContext.Session.SetString(SystemConstants.AppSettings.DefaultLanguageId, _configuration[SystemConstants.AppSettings.DefaultLanguageId]);
-            HttpContext.Session.SetString(SystemConstants.AppSettings.Token, result.ResultObj);
-            await HttpContext.SignInAsync(
-                        CookieAuthenticationDefaults.AuthenticationScheme,
-                        userPrincipal,
-                        authProperties);
 
-            return RedirectToAction("Index", "Home");
+            var roles = userPrincipal.Claims.Where(c => c.Type == ClaimTypes.Role).ToList().Select(c => c.Value).ToList()[0].Split(';');
+
+            var isAdmin = roles.Any(x => x == "admin");
+
+            if (isAdmin)
+            {
+                var authProperties = new AuthenticationProperties
+                {
+                    ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(10),
+                    IsPersistent = false
+                };
+                HttpContext.Session.SetString(SystemConstants.AppSettings.DefaultLanguageId, _configuration[SystemConstants.AppSettings.DefaultLanguageId]);
+                HttpContext.Session.SetString(SystemConstants.AppSettings.Token, result.ResultObj);
+                await HttpContext.SignInAsync(
+                            CookieAuthenticationDefaults.AuthenticationScheme,
+                            userPrincipal,
+                            authProperties);
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Bạn không có quyền truy cập vào trang này");
+                return View();
+            }
         }
 
         [HttpPost]

@@ -114,7 +114,7 @@ namespace eShop.AdminApp.Controllers
                 return RedirectToAction("Index");
             }
 
-            ModelState.AddModelError("", "Xóa không thành công");
+            ModelState.AddModelError("", "Xóa danh mục không thành công");
             return View(request);
         }
     }

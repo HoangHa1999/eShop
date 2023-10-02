@@ -65,9 +65,7 @@ namespace eShop.BackendApi.Controllers
                 return BadRequest();
             }
 
-            var category = await _categoryService.GetById(request.LanguageId, categoryId);
-
-            return CreatedAtAction(nameof(GetById), new { id = categoryId }, category);
+            return Ok();
         }
 
         [HttpDelete("{categoryId}")]
