@@ -1,4 +1,5 @@
 ﻿using eShop.Application.Sales;
+using eShop.Data.Enums;
 using eShop.ViewModels.Sales;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -18,19 +19,19 @@ namespace eShop.BackendApi.Controllers
             _orderService = orderService;
         }
 
-        //[HttpGet]
-        //public async Task<IActionResult> GetAll()
-        //{
-        //    var orders = await _orderService.GetAll();
-        //    return Ok(orders);
-        //}
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var orders = await _orderService.GetAll();
+            return Ok(orders);
+        }
 
-        //[HttpGet("{id}/{languageId}")]
-        //public async Task<IActionResult> GetById(string languageId, int id)
-        //{
-        //    var category = await _orderService.GetById(languageId, id);
-        //    return Ok(category);
-        //}
+        [HttpGet("{id}/{languageId}")]
+        public async Task<IActionResult> GetById(string languageId, int id)
+        {
+            var order = await _orderService.GetById(languageId, id);
+            return Ok(order);
+        }
 
         [HttpPost]
         public async Task<IActionResult> Create(CheckoutRequest request)
@@ -45,6 +46,16 @@ namespace eShop.BackendApi.Controllers
             }
 
             return CreatedAtAction("checkout", new { checkoutId });
+        }
+
+        [HttpPut("{orderId}/handle/{status}")]
+        [Authorize]
+        public async Task<IActionResult> UpdateStatus(int orderId, OrderStatus status)
+        {
+            var affectedResult = await _orderService.UpdateStatus(orderId, status);
+            if (affectedResult == 0)
+                return BadRequest();
+            return Ok();
         }
 
         //[HttpDelete("{orderId}")]

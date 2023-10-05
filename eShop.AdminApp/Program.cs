@@ -31,6 +31,8 @@ builder.Services.AddTransient<IProductApiClient, ProductApiClient>();
 
 builder.Services.AddTransient<ICategoryApiClient, CategoryApiClient>();
 
+builder.Services.AddTransient<IOrderApiClient, OrderApiClient>();
+
 builder.Services.AddValidatorsFromAssemblyContaining<LoginRequestValidator>();
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddFluentValidationClientsideAdapters();
