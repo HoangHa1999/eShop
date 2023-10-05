@@ -1,0 +1,56 @@
+version: '3.4'
+services:
+  eShopDb:
+    container_name: eShop-db
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+        - ACCEPT_EULA=Y
+        - SA_PASSWORD=Abc@12345
+    networks:
+        - backend
+    ports:
+      - "5000:1433"
+
+  eshop.backendapi:
+    container_name: eShop-api
+    image: ${DOCKER_REGISTRY-}eshopbackendapi
+    build:
+      context: .
+      dockerfile: eShop.BackendApi/Dockerfile
+    ports:
+      - "5001:80"
+    networks:
+        - backend
+    environment:
+        - DB_HOST=eShopDb
+        - DB_NAME=eShop_prod
+        - DB_USER=sa
+        - DB_SA_PASSWORD=Abc@12345
+    volumes:
+        - vmssql:/var/opt/mssql
+
+  eshop.adminapp:
+    container_name: eShop-adminapp
+    image: ${DOCKER_REGISTRY-}eshopadminapp
+    build:
+      context: .
+      dockerfile: eShop.AdminApp/Dockerfile
+    ports:
+      - "5002:80"
+
+  eshop.webapp:
+    container_name: eShop-webapp
+    image: ${DOCKER_REGISTRY-}eshopwebapp
+    build:
+      context: .
+      dockerfile: eShop.WebApp/Dockerfile
+    ports:
+      - "5003:80"
+
+volumes:
+  vmssql:
+    external: true
+     
+networks:
+  backend:
+    external: true

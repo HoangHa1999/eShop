@@ -16,7 +16,14 @@ namespace eShop.Data.EF
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json")
                 .Build();
-            var connectionString = configuration.GetConnectionString("eShopDb");
+
+            var dbHost = "localhost";
+            var dbName = "eShop_prod";
+            var dbUser = "sa";
+            var dbPassword = "Abc@12345";
+            var connectionString = $"Data Source={dbHost};Initial Catalog={dbName};User ID={dbUser};Password={dbPassword}";
+
+            //var connectionString = configuration.GetConnectionString("eShopDb");
             var optionsBuilder = new DbContextOptionsBuilder<EShopDbContext>();
             optionsBuilder.UseSqlServer(connectionString);
 

@@ -22,12 +22,22 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System;
 using System.Collections.Generic;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var dbHost = Environment.GetEnvironmentVariable("DB_HOST");
+var dbName = Environment.GetEnvironmentVariable("DB_NAME");
+var dbUser = Environment.GetEnvironmentVariable("DB_USER");
+var dbPassword = Environment.GetEnvironmentVariable("DB_SA_PASSWORD");
+var connectionString = $"Data Source={dbHost};Initial Catalog={dbName};User ID={dbUser};Password={dbPassword}";
+
 builder.Services.AddDbContext<EShopDbContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString(SystemConstants.MainConnectionString)));
+                options.UseSqlServer(connectionString));
+
+//builder.Services.AddDbContext<EShopDbContext>(options =>
+//                options.UseSqlServer(builder.Configuration.GetConnectionString(SystemConstants.MainConnectionString)));
 
 builder.Services.AddIdentity<AppUser, AppRole>()
  .AddEntityFrameworkStores<EShopDbContext>()
@@ -149,9 +159,5 @@ app.UseSwaggerUI(c =>
 {
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Swagger eShop V1");
 });
-
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
