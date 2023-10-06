@@ -9,7 +9,9 @@ services:
     networks:
         - backend
     ports:
-      - "5000:1433"
+      - 5000:1433
+    volumes:
+        - vmssql:/var/opt/mssql
 
   eshop.backendapi:
     container_name: eShop-api
@@ -18,7 +20,7 @@ services:
       context: .
       dockerfile: eShop.BackendApi/Dockerfile
     ports:
-      - "5001:80"
+      - 5001:80
     networks:
         - backend
     environment:
@@ -26,8 +28,8 @@ services:
         - DB_NAME=eShop_prod
         - DB_USER=sa
         - DB_SA_PASSWORD=Abc@12345
-    volumes:
-        - vmssql:/var/opt/mssql
+    depends_on:
+        - eShopDb
 
   eshop.adminapp:
     container_name: eShop-adminapp
@@ -36,7 +38,10 @@ services:
       context: .
       dockerfile: eShop.AdminApp/Dockerfile
     ports:
-      - "5002:80"
+      - 5002:80
+    depends_on:
+      - eshop.backendapi
+
 
   eshop.webapp:
     container_name: eShop-webapp
@@ -45,7 +50,10 @@ services:
       context: .
       dockerfile: eShop.WebApp/Dockerfile
     ports:
-      - "5003:80"
+      - 5003:80
+    depends_on:
+      - eshop.backendapi
+
 
 volumes:
   vmssql:

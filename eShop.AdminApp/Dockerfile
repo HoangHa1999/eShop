@@ -22,4 +22,5 @@ RUN dotnet publish "eShop.AdminApp.csproj" -c Release -o /app/publish /p:UseAppH
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+EXPOSE 80
 ENTRYPOINT ["dotnet", "eShop.AdminApp.dll"]
