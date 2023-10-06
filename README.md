@@ -1,5 +1,6 @@
 # ASP.NET 7.0 project
 ## Technologies
+- Docker
 - ASP.NET 7.0
 - Entity Framework Core 7.0
 ## Install Packages
