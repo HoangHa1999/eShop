@@ -2,6 +2,7 @@
 ## Technologies
 - ASP.NET 7.0
 - Entity Framework Core 7.0
+- Docker
 ## Install Packages
 - Microsoft.EntityFrameworkCore.SqlServer
 - Microsoft.EntityFrameworkCore.Tools
