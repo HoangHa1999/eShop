@@ -11,7 +11,7 @@ services:
     ports:
       - 5000:1433
     volumes:
-        - vmssql:/var/opt/mssql
+        - sql-sever:/var/opt/mssql
 
   eshop.backendapi:
     container_name: eShop-api
@@ -56,7 +56,7 @@ services:
 
 
 volumes:
-  vmssql:
+  sql-sever:
     external: true
      
 networks:
