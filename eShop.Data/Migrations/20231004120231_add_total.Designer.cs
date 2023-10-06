@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eShop.Data.EF;
 
@@ -11,9 +12,11 @@ using eShop.Data.EF;
 namespace eShop.Data.Migrations
 {
     [DbContext(typeof(EShopDbContext))]
-    partial class EShopDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231004120231_add_total")]
+    partial class add_total
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -286,7 +289,7 @@ namespace eShop.Data.Migrations
                         {
                             Id = new Guid("7af97aee-9a3f-4008-ac98-3ce383de2ec0"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ac85cc48-e2ba-4046-bb5b-9bfabbb322aa",
+                            ConcurrencyStamp = "1358d85e-96c7-4088-b888-33473944a7e4",
                             Dob = new DateTime(1999, 12, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
@@ -295,7 +298,7 @@ namespace eShop.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "admin@gmail.com",
                             NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAIAAYagAAAAEHVKhCR/QvfGTUJwEPlyo6U8xq94Se/b6oHLfSq85rmA0+QA/H+YGzGACztA5M1uwQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEK1dDSFHe22bvrV9qWMjToc8TinqWNnNly+0OIc9uq247lzwrPIyVX87WzUd9mWlnA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -360,6 +363,22 @@ namespace eShop.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            IsShowOnHome = true,
+                            SortOrder = 1,
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            IsShowOnHome = true,
+                            SortOrder = 2,
+                            Status = 1
+                        });
                 });
 
             modelBuilder.Entity("eShop.Data.Entities.CategoryTranslation", b =>
@@ -404,6 +423,48 @@ namespace eShop.Data.Migrations
                     b.HasIndex("LanguageId");
 
                     b.ToTable("CategoryTranslations", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CategoryId = 1,
+                            LanguageId = "vi",
+                            Name = "Áo nam",
+                            SeoAlias = "ao-nam",
+                            SeoDescription = "Sản phẩm áo thời trang nam",
+                            SeoTitle = "Sản phẩm áo thời trang nam"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CategoryId = 1,
+                            LanguageId = "en",
+                            Name = "Men Shirt",
+                            SeoAlias = "men-shirt",
+                            SeoDescription = "The shirt products for men",
+                            SeoTitle = "The shirt products for men"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CategoryId = 2,
+                            LanguageId = "vi",
+                            Name = "Áo nữ",
+                            SeoAlias = "ao-nu",
+                            SeoDescription = "Sản phẩm áo thời trang nữ",
+                            SeoTitle = "Sản phẩm áo thời trang nữ"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CategoryId = 2,
+                            LanguageId = "en",
+                            Name = "Women Shirt",
+                            SeoAlias = "women-shirt",
+                            SeoDescription = "The shirt products for women",
+                            SeoTitle = "The shirt products for women"
+                        });
                 });
 
             modelBuilder.Entity("eShop.Data.Entities.Contact", b =>
@@ -579,6 +640,26 @@ namespace eShop.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Products", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DateCreated = new DateTime(2023, 10, 4, 19, 2, 31, 652, DateTimeKind.Local).AddTicks(2814),
+                            OriginalPrice = 100000m,
+                            Price = 200000m,
+                            Stock = 0,
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 2,
+                            DateCreated = new DateTime(2023, 10, 4, 19, 2, 31, 652, DateTimeKind.Local).AddTicks(2832),
+                            OriginalPrice = 200000m,
+                            Price = 300000m,
+                            Stock = 0,
+                            ViewCount = 0
+                        });
                 });
 
             modelBuilder.Entity("eShop.Data.Entities.ProductImage", b =>
@@ -633,6 +714,18 @@ namespace eShop.Data.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("ProductInCategories", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            CategoryId = 1,
+                            ProductId = 1
+                        },
+                        new
+                        {
+                            CategoryId = 1,
+                            ProductId = 2
+                        });
                 });
 
             modelBuilder.Entity("eShop.Data.Entities.ProductTranslation", b =>
@@ -682,6 +775,32 @@ namespace eShop.Data.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("ProductTranslations", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Áo sơ mi trắng Việt Tiến",
+                            Details = "Áo sơ mi trắng Việt Tiến",
+                            LanguageId = "vi",
+                            Name = "Áo sơ mi trắng Việt Tiến",
+                            ProductId = 1,
+                            SeoAlias = "ao-so-mi-trang-viet-tien",
+                            SeoDescription = "Áo sơ mi trắng Việt Tiến",
+                            SeoTitle = "Áo sơ mi trắng Việt Tiến"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "Viet Tien Men T-Shirt",
+                            Details = "Viet Tien Men T-Shirt",
+                            LanguageId = "en",
+                            Name = "Viet Tien Men T-Shirt",
+                            ProductId = 1,
+                            SeoAlias = "viet-tien-men-t-shirt",
+                            SeoDescription = "Viet Tien Men T-Shirt",
+                            SeoTitle = "Viet Tien Men T-Shirt"
+                        });
                 });
 
             modelBuilder.Entity("eShop.Data.Entities.Promotion", b =>

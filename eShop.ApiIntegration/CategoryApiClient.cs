@@ -56,7 +56,7 @@ namespace eShop.ApiIntegration
             return JsonConvert.DeserializeObject<ApiErrorResult<int>>(await response.Content.ReadAsStringAsync());
         }
 
-        public async Task<ApiResult<int>> UpdateCategory(CategoryUpdateRequest request)
+        public async Task<int> UpdateCategory(CategoryUpdateRequest request)
         {
             var sessions = _httpContextAccessor
                 .HttpContext
@@ -75,10 +75,10 @@ namespace eShop.ApiIntegration
             var response = await client.PutAsync($"/api/categories/{request.Id}", httpContent);
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<ApiSuccessResult<int>>(await response.Content.ReadAsStringAsync());
+                return 1;
             }
 
-            return JsonConvert.DeserializeObject<ApiErrorResult<int>>(await response.Content.ReadAsStringAsync());
+            return 0;
         }
 
         public async Task<bool> DeleteCategory(int id)

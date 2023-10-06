@@ -38,6 +38,7 @@ namespace eShop.WebApp.Controllers
                     CategoryId = id,
                     LanguageId = culture,
                     PageIndex = page,
+                    PageSize = 7
                 });
 
                 return View(new ProductCategoryViewModel()
@@ -52,6 +53,7 @@ namespace eShop.WebApp.Controllers
                 {
                     LanguageId = culture,
                     PageIndex = page,
+                    PageSize = 7
                 });
                 return View(new ProductCategoryViewModel()
                 {

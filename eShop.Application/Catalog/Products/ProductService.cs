@@ -470,7 +470,9 @@ namespace eShop.Application.Catalog.Products
                     Stock = x.p.Stock,
                     ViewCount = x.p.ViewCount,
                     ThumbnailImage = _storageService.GetFileUrl(x.pi.ImagePath)
-                }).ToListAsync();
+                })
+                .Distinct()
+                .ToListAsync();
 
             return data;
         }
@@ -506,7 +508,9 @@ namespace eShop.Application.Catalog.Products
                     Stock = x.p.Stock,
                     ViewCount = x.p.ViewCount,
                     ThumbnailImage = _storageService.GetFileUrl(x.pi.ImagePath)
-                }).ToListAsync();
+                })
+                .Distinct()
+                .ToListAsync();
 
             return data;
         }

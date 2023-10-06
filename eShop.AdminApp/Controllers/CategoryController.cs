@@ -82,7 +82,7 @@ namespace eShop.AdminApp.Controllers
                 return View(request);
 
             var result = await _categoryApiClient.UpdateCategory(request);
-            if (result.IsSuccessed)
+            if (result != 0)
             {
                 TempData["result"] = "Cập nhật danh mục thành công";
                 return RedirectToAction("Index");

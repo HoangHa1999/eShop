@@ -7,9 +7,14 @@
 - Microsoft.EntityFrameworkCore.Tools
 - Microsoft.EntityFrameworkCore.Design
 ## How to configure and run
-- Install sdks .Net 7.0
-- Config ConnectionStrings
-- Update-Database for eShop.Data 
+- Install Docker Destop
+- Create network : `docker network create --scope=swarm --attachable -d overlay backend`
+- Create volume : `docker volume create --name=sql-sever`
+- Run docker-compose : `docker-compose up -d`
+- Set startup project : `eShop.Data` and run `Update-Database` in Package Manager Console
+- Api: `http://localhost:5001/swagger/index.html`
+- AdminApp: `http://localhost:5002` (admin/Abc@12345)
+- WebApp: `http://localhost:5003`
 ## References
 - https://youtu.be/ImYt340wQxE?si=NYLPRQLJF0p2v7aa
 ## Template

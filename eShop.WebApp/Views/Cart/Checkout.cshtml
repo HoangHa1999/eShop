@@ -154,7 +154,7 @@ else {
                     @foreach (var product in Model.CartItems)
                     {
                         <div class="d-flex justify-content-between">
-                            <img src="@(Configuration["BaseAddress"] + product.Image)" alt="@product.Name" style="width: 50px;">
+                            <img src="@(Configuration["BaseImage"] + product.Image)" alt="@product.Name" style="width: 50px;">
                             <p>@product.Name "SL:@product.Quantity"</p>
                             <p>@((product.Price * product.Quantity).ToString("N0"))</p>
                         </div>

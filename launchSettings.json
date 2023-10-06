@@ -1,0 +1,13 @@
+{
+  "profiles": {
+    "Docker Compose": {
+      "commandName": "DockerCompose",
+      "commandVersion": "1.0",
+      "serviceActions": {
+        "eshop.backendapi": "StartDebugging",
+        "eshop.webapp": "StartDebugging",
+        "eshop.adminapp": "StartDebugging"
+      }
+    }
+  }
+}

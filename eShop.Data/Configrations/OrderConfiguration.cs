@@ -23,14 +23,13 @@ namespace eShop.Data.Configrations
 
             builder.Property(x => x.ShipAddress).IsRequired().HasMaxLength(200);
 
-
             builder.Property(x => x.ShipName).IsRequired().HasMaxLength(200);
-
 
             builder.Property(x => x.ShipPhoneNumber).IsRequired().HasMaxLength(200);
 
-            builder.HasOne(x => x.AppUser).WithMany(x => x.Orders).HasForeignKey(x => x.UserId);
+            builder.Property(x => x.Total).IsRequired().HasDefaultValue(0);
 
+            builder.HasOne(x => x.AppUser).WithMany(x => x.Orders).HasForeignKey(x => x.UserId);
         }
     }
 }

@@ -22,12 +22,22 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System;
 using System.Collections.Generic;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var dbHost = Environment.GetEnvironmentVariable("DB_HOST");
+var dbName = Environment.GetEnvironmentVariable("DB_NAME");
+var dbUser = Environment.GetEnvironmentVariable("DB_USER");
+var dbPassword = Environment.GetEnvironmentVariable("DB_SA_PASSWORD");
+var connectionString = $"Data Source={dbHost};Initial Catalog={dbName};User ID={dbUser};Password={dbPassword};Trusted_Connection=false;TrustServerCertificate=true";
+
 builder.Services.AddDbContext<EShopDbContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString(SystemConstants.MainConnectionString)));
+                options.UseSqlServer(connectionString));
+
+//builder.Services.AddDbContext<EShopDbContext>(options =>
+//                options.UseSqlServer(builder.Configuration.GetConnectionString(SystemConstants.MainConnectionString)));
 
 builder.Services.AddIdentity<AppUser, AppRole>()
  .AddEntityFrameworkStores<EShopDbContext>()
@@ -134,7 +144,7 @@ else
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseAuthentication();
@@ -152,6 +162,6 @@ app.UseSwaggerUI(c =>
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller}/{action=Index}/{id?}");
 
 app.Run();

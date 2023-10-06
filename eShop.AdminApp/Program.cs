@@ -31,6 +31,8 @@ builder.Services.AddTransient<IProductApiClient, ProductApiClient>();
 
 builder.Services.AddTransient<ICategoryApiClient, CategoryApiClient>();
 
+builder.Services.AddTransient<IOrderApiClient, OrderApiClient>();
+
 builder.Services.AddValidatorsFromAssemblyContaining<LoginRequestValidator>();
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddFluentValidationClientsideAdapters();
@@ -56,7 +58,7 @@ else
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseAuthentication();
