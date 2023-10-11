@@ -19,15 +19,8 @@ services:
     build:
       context: .
       dockerfile: eShop.BackendApi/Dockerfile
-    ports:
-      - 5001:80
     networks:
         - backend
-    environment:
-        - DB_HOST=eShopDb
-        - DB_NAME=eShop_prod
-        - DB_USER=sa
-        - DB_SA_PASSWORD=Abc@12345
     depends_on:
         - eShopDb
 
@@ -37,8 +30,6 @@ services:
     build:
       context: .
       dockerfile: eShop.AdminApp/Dockerfile
-    ports:
-      - 5002:80
     depends_on:
       - eshop.backendapi
 
@@ -49,8 +40,6 @@ services:
     build:
       context: .
       dockerfile: eShop.WebApp/Dockerfile
-    ports:
-      - 5003:80
     depends_on:
       - eshop.backendapi
 
