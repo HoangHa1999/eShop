@@ -27,17 +27,8 @@ using System.Collections.Generic;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var dbHost = Environment.GetEnvironmentVariable("DB_HOST");
-var dbName = Environment.GetEnvironmentVariable("DB_NAME");
-var dbUser = Environment.GetEnvironmentVariable("DB_USER");
-var dbPassword = Environment.GetEnvironmentVariable("DB_SA_PASSWORD");
-var connectionString = $"Data Source={dbHost};Initial Catalog={dbName};User ID={dbUser};Password={dbPassword};Trusted_Connection=false;TrustServerCertificate=true";
-
 builder.Services.AddDbContext<EShopDbContext>(options =>
-                options.UseSqlServer(connectionString));
-
-//builder.Services.AddDbContext<EShopDbContext>(options =>
-//                options.UseSqlServer(builder.Configuration.GetConnectionString(SystemConstants.MainConnectionString)));
+                options.UseSqlServer(builder.Configuration.GetConnectionString(SystemConstants.MainConnectionString)));
 
 builder.Services.AddIdentity<AppUser, AppRole>()
  .AddEntityFrameworkStores<EShopDbContext>()
